@@ -1,7 +1,7 @@
 {
   "name": "server-node-dio",
   "version": "1.0.0",
-  "description": "servidor http em node",
+  "description": "gerenciador de uso de memoria Ram e servidor http em node",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
