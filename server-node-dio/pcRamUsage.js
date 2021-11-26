@@ -1,6 +1,5 @@
 const os = require('os');
 
-
 setInterval(() => {
     const { arch, platform, totalmem, freemem } = os;
     const tRam = totalmem() / 1024 / 1024;
@@ -17,5 +16,6 @@ setInterval(() => {
 
     console.clear();
     console.table(stats);
+    exports.stats = stats;
 }, 1000);
 
