@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import ForbiddenError from '../models/errors/forbidden.error.model';
 import userRepository from '../repositories/user.repository';
+import Jwt from 'jsonwebtoken';
+import { StatusCodes } from 'http-status-codes';
 
 const authorizationRoute = Router();
 
@@ -27,7 +29,17 @@ authorizationRoute.post('/token', async (req: Request, res: Response, next: Next
         }
 
         const user = await userRepository.findByUsernameAndPassword(username, password);
-        console.log(username, password);
+
+        if (!user) {
+            throw new ForbiddenError('Usuário ou senha inválido!');
+        }
+
+        const jwtPayload = {username: user.username};
+        const jwtOptions = { subject: user?.uuid};
+        const secretKey = 'my_secrect_key';
+
+        const jwt = Jwt.sign(jwtPayload, secretKey, jwtOptions);
+        res.status(StatusCodes.OK).json({token:jwt});
 
     } catch (error) {
         next(error);
