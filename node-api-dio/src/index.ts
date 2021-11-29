@@ -3,12 +3,12 @@ import usersRoute from './routes/users.route';
 
 const app = express(); // instanciar a aplicação
 
-app.use(usersRoute);
+app.use(express.json()); // Configurações da aplicação
+app.use(express.urlencoded({extended: true}));
 
-app.get('/status', (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).send({foo: 'Testando ts-node-dev'});
-});
+app.use(usersRoute); // Configurações de Rotas
 
+// Inicialização do Servidor
 app.listen(3000, () => {
     console.log('Aplicação executando na porta 3000!');
 });
