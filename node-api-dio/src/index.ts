@@ -1,12 +1,16 @@
 import express, {Request, Response, NextFunction} from 'express';
+import statusRoute from './routes/status.route';
 import usersRoute from './routes/users.route';
 
 const app = express(); // instanciar a aplicação
 
-app.use(express.json()); // Configurações da aplicação
+// Configurações da aplicação
+app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use(usersRoute); // Configurações de Rotas
+// Configurações de Rotas
+app.use(usersRoute);
+app.use(statusRoute);
 
 // Inicialização do Servidor
 app.listen(3000, () => {
