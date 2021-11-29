@@ -23,16 +23,20 @@ usersRoute.post('/users', async (req: Request, res: Response, next: NextFunction
     res.send(StatusCodes.CREATED).send(uuid);
 });
 
-usersRoute.put('/users/:uuid', (req: Request<{uuid: string}>, res: Response, next: NextFunction) => {
+usersRoute.put('/users/:uuid', async (req: Request<{uuid: string}>, res: Response, next: NextFunction) => {
     const uuid = req.params.uuid;
     const updateUser = req.body;
 
     updateUser.uuid = uuid;
-    res.status(StatusCodes.OK).send(updateUser);
+
+    await userRepository.updateUser(updateUser);
+
+    res.status(StatusCodes.OK).send();
 });
 
-usersRoute.delete('/users/:uuid', (req: Request<{uuid: string}>, res: Response, next: NextFunction) => {
+usersRoute.delete('/users/:uuid', async (req: Request<{uuid: string}>, res: Response, next: NextFunction) => {
     const uuid = req.params.uuid;
+    await userRepository.removeUser(uuid);
     res.sendStatus(StatusCodes.OK);
 });
 
