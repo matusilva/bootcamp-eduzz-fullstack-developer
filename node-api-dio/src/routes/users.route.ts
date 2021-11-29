@@ -21,4 +21,17 @@ usersRoute.post('/users', (req: Request, res: Response, next: NextFunction) => {
     res.send(StatusCodes.CREATED).send(newUser);
 });
 
+usersRoute.put('/users/:uuid', (req: Request<{uuid: string}>, res: Response, next: NextFunction) => {
+    const uuid = req.params.uuid;
+    const updateUser = req.body;
+
+    updateUser.uuid = uuid;
+    res.status(StatusCodes.OK).send(updateUser);
+});
+
+usersRoute.delete('/users/:uuid', (req: Request<{uuid: string}>, res: Response, next: NextFunction) => {
+    const uuid = req.params.uuid;
+    res.sendStatus(StatusCodes.OK);
+});
+
 export default usersRoute;
